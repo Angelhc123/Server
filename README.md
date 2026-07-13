@@ -1,83 +1,46 @@
-# Servidor de Minecraft para GitHub y Railway 🎮
+# Servidor de Minecraft para Railway (Especificaciones Completas) 🎮
 
-Este repositorio contiene la configuración lista para desplegar tu propio servidor de Minecraft en [Railway](https://railway.app/) de manera fácil, económica y completamente personalizable.
+Este repositorio contiene la plantilla definitiva y completamente configurada para desplegar un servidor de Minecraft en [Railway](https://railway.app/). 
 
----
-
-## 🛠️ Cómo cambiar de versión fácilmente
-
-Para cambiar la versión de Minecraft, solo debes editar el archivo `Dockerfile` en este repositorio:
-
-1. Abre el archivo [Dockerfile](file:///home/desci2/Documentos/Maincra/Dockerfile).
-2. Busca la línea que dice:
-   ```dockerfile
-   ENV VERSION=1.20.4
-   ```
-3. Cambia `1.20.4` por la versión que desees (por ejemplo: `1.21`, `1.19.2`, etc., o `LATEST` para la versión estable más reciente).
-4. Guarda el archivo, haz commit y empújalo (push) a tu repositorio de GitHub. ¡Railway detectará el cambio y reconstruirá tu servidor automáticamente!
+Se incluye un archivo de automatización `railway.json` para indicarle a Railway de forma explícita cómo compilar el servidor usando Docker, evitando cualquier fallo de compilación automático.
 
 ---
 
-## 🔌 Cómo activar Plugins o Mods en el futuro
+## ⚙️ Archivo de Configuración Completo: `Dockerfile`
 
-Por defecto, el servidor se inicia en modo **Vanilla** (sin mods). Si en el futuro quieres añadir mods o plugins, puedes hacerlo cambiando la configuración en el `Dockerfile`:
+Todas las especificaciones del servidor se editan directamente en el archivo [Dockerfile](file:///home/desci2/Documentos/Maincra/Dockerfile). A continuación tienes la lista de variables que puedes cambiar:
 
-### Para Plugins (Spigot, Paper, Purpur)
-1. En [Dockerfile](file:///home/desci2/Documentos/Maincra/Dockerfile), cambia la línea `ENV TYPE=VANILLA` por:
-   ```dockerfile
-   ENV TYPE=PAPER
-   ```
-2. Puedes instalar plugins agregando una variable de entorno en tu panel de Railway llamada `PLUGINS` con enlaces directos de descarga separados por comas, o usando mods/plugins cargados en el volumen `/data/plugins`.
+### Configuración del Servidor y Versión
+*   `VERSION`: Cambia la versión de Minecraft (ej: `1.20.4`, `1.21`, `1.18.2` o `LATEST`).
+*   `TYPE`: Cambia el motor del servidor (`VANILLA` para juego original, `PAPER` para plugins, `FABRIC` o `FORGE` para mods).
+*   `MEMORY`: RAM asignada al servidor (ej: `2G` para 2 Gigabytes, `4G` para 4 Gigabytes).
 
-### Para Mods (Fabric / Forge)
-1. En [Dockerfile](file:///home/desci2/Documentos/Maincra/Dockerfile), cambia la línea `ENV TYPE=VANILLA` por:
-   ```dockerfile
-   ENV TYPE=FABRIC
-   # O si prefieres Forge:
-   # ENV TYPE=FORGE
-   ```
-2. Para instalar mods automáticamente, puedes añadir la variable de entorno `MODS` en Railway con enlaces directos a los archivos `.jar` de los mods (separados por comas), o subirlos directamente a la carpeta `/data/mods` a través de un cliente SFTP o gestor de volumen si tu panel de Railway lo permite.
-3. Para Fabric, también puedes indicar qué versión del cargador (loader) usar si es necesario.
-
----
-
-## 🚀 Guía paso a paso para desplegar en Railway
-
-Sigue estos pasos detallados para hospedar tu servidor:
-
-### Paso 1: Subir este código a GitHub
-1. Crea un repositorio privado o público en tu cuenta de GitHub (por ejemplo, `mi-servidor-minecraft`).
-2. Sube los archivos de este directorio (`Dockerfile`, `.gitignore` y `README.md`) a tu repositorio.
-
-### Paso 2: Crear el servicio en Railway
-1. Inicia sesión en [Railway.app](https://railway.app/).
-2. Haz clic en **New Project** y selecciona **Deploy from GitHub repo**.
-3. Elige tu repositorio de Minecraft.
-4. Railway detectará automáticamente el `Dockerfile` y comenzará a compilar el contenedor.
-
-### Paso 3: Configurar persistencia (¡CRÍTICO! ⚠️)
-Por defecto, los servidores en la nube borran los datos cuando se reinician. Necesitamos crear un disco persistente (Volumen) para que tu mundo no se borre:
-1. En tu proyecto de Railway, haz clic en el servicio de tu servidor de Minecraft.
-2. Ve a la pestaña **Volumes** (Volúmenes) y haz clic en **Add Volume**.
-3. Ponle un tamaño (ej. `5GB` o `10GB` es más que suficiente para empezar).
-4. Configura el **Mount Path** (Ruta de montaje) como:
-   ```text
-   /data
-   ```
-5. Railway reiniciará el contenedor para montar el volumen. ¡Ahora tu mundo y configuraciones están a salvo!
-
-### Paso 4: Crear un puerto TCP para conectar al juego (¡CRÍTICO! ⚠️)
-Minecraft no usa HTTP/HTTPS normales, requiere una conexión TCP directa:
-1. En el servicio de tu servidor en Railway, ve a la pestaña **Settings** (Configuración).
-2. Desplázate hacia abajo hasta la sección **Network** (Red).
-3. Haz clic en **Add TCP Proxy**.
-4. Railway generará una dirección y un puerto público. Se verá algo similar a esto:
-   `services-production.up.railway.app:12345` o `monorail.proxy.rlwy.net:xxxxx`.
-5. **¡Esta dirección completa es la que tú y tus amigos usarán para conectarse en el juego!**
+### Propiedades del Mundo e Interacción
+*   `ONLINE_MODE`: 
+    *   `true`: Solo entran cuentas Premium originales.
+    *   `false`: Permite entrar a jugadores No-Premium (TLauncher, launchers piratas, etc.).
+*   `OPS`: Agrega nombres de jugadores administradores separados por comas para que tengan permisos de comandos (ej: `MiNombreUsuario,Amigo1`).
+*   `MOTD`: El texto de descripción que verán los jugadores en la lista de servidores multijugador.
+*   `MAX_PLAYERS`: Límite máximo de jugadores simultáneos (ej: `20`).
+*   `MODE`: Modo de juego (`survival`, `creative`, `adventure`, `spectator`).
+*   `DIFFICULTY`: Dificultad del juego (`peaceful`, `easy`, `normal`, `hard`).
+*   `PVP`: Combate entre jugadores (`true` habilitado, `false` deshabilitado).
+*   `SEED`: Escribe una semilla específica si quieres generar un mapa concreto.
+*   `GENERATE_STRUCTURES`: Si se deben generar aldeas y monumentos (`true`/`false`).
 
 ---
 
-## ⚙️ Ajustes opcionales de Rendimiento
+## 🛠️ Cómo aplicar los cambios y desplegar
 
-Si notas que el servidor necesita más recursos o quieres cambiar la memoria RAM:
-- Cambia la variable `ENV MEMORY=2G` en el `Dockerfile` a un valor más alto (ej. `3G` o `4G`), asegurándote de que tu plan de Railway soporte esa cantidad de RAM.
+1. **Sube los archivos a GitHub**: Sube los archivos `Dockerfile`, `railway.json`, `.gitignore` y `README.md` actualizados a tu repositorio.
+2. **Despliega en Railway**: 
+   *   Al detectar el archivo `railway.json`, Railway utilizará el **Dockerfile** automáticamente para compilar el servidor de manera correcta, solucionando el error de compilación anterior.
+3. **Crea el Volumen Persistente (Para no perder el Mundo)**:
+   *   Haz clic derecho en el fondo oscuro (Project Canvas) de tu panel de Railway.
+   *   Selecciona **Volume**.
+   *   Asigna un tamaño (ej: `5 GB` o `10 GB`) y en **Mount Path** escribe: `/data`.
+   *   Conéctalo a tu servicio del servidor de Minecraft.
+4. **Crea el Proxy TCP**:
+   *   Entra a la configuración de tu servicio, ve a la pestaña **Settings**.
+   *   Baja hasta **Network** y haz clic en **Add TCP Proxy**.
+   *   Usa la dirección generada (ej: `xxxx.rlwy.net:yyyyy`) para conectarte dentro de Minecraft.

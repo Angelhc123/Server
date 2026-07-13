@@ -40,7 +40,7 @@ ENV PVP=true
 # ONLINE_MODE: 
 # - true: Solo permite cuentas premium (compradas).
 # - false: Permite cuentas no premium / piratas (TLauncher, etc.).
-ENV ONLINE_MODE=true
+ENV ONLINE_MODE=false
 
 # Administradores del servidor (Jugadores con OP).
 # Agrega tu nombre de usuario de Minecraft aquí (separado por comas si son varios).

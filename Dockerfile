@@ -63,3 +63,8 @@ ENV GENERATE_STRUCTURES=true
 # --- 7. RED Y PUERTOS ---
 # Expone el puerto por defecto de Minecraft (TCP 25565)
 EXPOSE 25565
+
+# --- 8. CONFIGURACIÓN DE RCON (CONSOLA REMOTA) ---
+ENV ENABLE_RCON=true
+ENV RCON_PASSWORD=minecraft_secret_123
+EXPOSE 25575

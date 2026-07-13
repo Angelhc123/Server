@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Server Dashboard 🎮</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Outfit:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo-area">
+                <span class="minecraft-cube">⛏️</span>
+                <h1>Minecraft Server Panel</h1>
+            </div>
+            <div class="status-indicator">
+                <span class="status-text">Cargando...</span>
+                <span class="status-glow offline" id="status-light"></span>
+            </div>
+        </header>
+
+        <!-- Warning Config Banner -->
+        <div id="config-warning" class="warning-banner hidden">
+            ⚠️ <strong>Advertencia:</strong> Faltan configurar variables de entorno de Railway (`RAILWAY_API_TOKEN` u otras). Algunas funciones del panel web estarán desactivadas. Revisa el archivo README.md.
+        </div>
+
+        <!-- Main Layout -->
+        <main class="app-grid">
+            <!-- Left Side: Terminal Console -->
+            <section class="panel console-panel">
+                <div class="panel-header">
+                    <h2>Consola del Servidor (RCON)</h2>
+                    <button class="clear-btn" onclick="clearConsole()">Limpiar</button>
+                </div>
+                <div class="terminal" id="terminal-screen">
+                    <div class="terminal-line system-msg">[Panel] Conectando con la consola de RCON de Minecraft...</div>
+                </div>
+                <form class="terminal-input-container" id="terminal-form">
+                    <span class="prompt">></span>
+                    <input type="text" id="cmd-input" placeholder="Escribe un comando de Minecraft (ej: op mi_usuario)..." autocomplete="off">
+                    <button type="submit" class="send-btn">Ejecutar</button>
+                </form>
+                
+                <!-- Quick Commands -->
+                <div class="quick-commands">
+                    <h3>Comandos Rápidos</h3>
+                    <div class="quick-buttons">
+                        <button onclick="sendQuickCommand('list')">👥 Ver Jugadores</button>
+                        <button onclick="sendQuickCommand('save-all')">💾 Guardar Mundo</button>
+                        <button onclick="promptOp()">👑 Dar OP (Admin)</button>
+                        <button onclick="promptWhitelist()">📝 whitelist (Lista Blanca)</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Side: Settings & Info -->
+            <section class="panel-group">
+                <!-- Storage Panel -->
+                <article class="panel storage-panel">
+                    <h2>Almacenamiento (Volumen)</h2>
+                    <div class="storage-info">
+                        <span id="storage-percentage">0%</span>
+                        <span class="storage-details" id="storage-text">Calculando espacio...</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="storage-fill" style="width: 0%"></div>
+                    </div>
+                    <p class="panel-note">Muestra la capacidad utilizada de tu volumen de Railway montado en /data.</p>
+                </article>
+
+                <!-- Minecraft Version Panel -->
+                <article class="panel version-panel">
+                    <h2>Cambiar Versión de Minecraft</h2>
+                    <div class="form-group">
+                        <label for="version-select">Selecciona una versión:</label>
+                        <select id="version-select">
+                            <option value="LATEST">Última versión estable (LATEST)</option>
+                            <option value="1.21">Minecraft 1.21</option>
+                            <option value="1.20.4" selected>Minecraft 1.20.4</option>
+                            <option value="1.20.1">Minecraft 1.20.1</option>
+                            <option value="1.19.2">Minecraft 1.19.2</option>
+                            <option value="1.18.2">Minecraft 1.18.2</option>
+                            <option value="1.16.5">Minecraft 1.16.5</option>
+                        </select>
+                    </div>
+                    <button class="action-btn" id="update-version-btn" onclick="changeVersion()">Cambiar versión y Reiniciar</button>
+                    <p class="panel-note">Cambia la versión en Railway y reinicia el servidor. Puede tardar un par de minutos en reinstalarse.</p>
+                </article>
+
+                <!-- Reset World Panel -->
+                <article class="panel reset-panel">
+                    <h2>Restablecer el Mundo (Reset)</h2>
+                    <div class="form-group">
+                        <label for="seed-input">Semilla (Opcional - Déjalo vacío para semilla aleatoria):</label>
+                        <input type="text" id="seed-input" placeholder="Ej: 1938501239">
+                    </div>
+                    <button class="action-btn danger-btn" id="reset-world-btn" onclick="resetWorld()">Borrar Mundo y Crear Nuevo</button>
+                    <p class="panel-note danger-text">⚠️ <strong>CUIDADO:</strong> Esto creará un mapa completamente nuevo. El progreso actual se archivará y se reiniciará el servidor.</p>
+                </article>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

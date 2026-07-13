@@ -45,7 +45,7 @@ ENV ONLINE_MODE=false
 # Administradores del servidor (Jugadores con OP).
 # Agrega tu nombre de usuario de Minecraft aquí (separado por comas si son varios).
 # Ejemplo: ENV OPS=MiUsuarioMinecraft,AmigoMinecraft
-ENV OPS=""
+ENV OPS="Alukar24"
 
 # Habilitar lista blanca / whitelist (true / false)
 ENV ENABLE_WHITELIST=false

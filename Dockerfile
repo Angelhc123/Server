@@ -10,10 +10,10 @@ ENV EULA=TRUE
 
 # --- 2. CONFIGURACIÓN DE VERSIONES Y TIPOS (Fácil de cambiar) ---
 # Tipo de servidor: VANILLA, PAPER, FORGE, FABRIC, PURPUR, SPIGOT, etc.
-ENV TYPE=VANILLA
+ENV TYPE=FABRIC
 
 # Versión del juego: LATEST, 1.20.4, 1.20.1, 1.19.2, 1.18.2, etc.
-ENV VERSION=1.20.4
+ENV VERSION=1.20.1
 
 # --- 3. RECURSOS Y RENDIMIENTO ---
 # Memoria RAM máxima y mínima que usará el servidor (ej: 2G, 4G)
@@ -55,7 +55,7 @@ ENV ENABLE_WHITELIST=false
 ENV SEED=""
 
 # Nombre de la carpeta del mundo (Por defecto es "world")
-ENV LEVEL=world
+ENV LEVEL=apocalipsis
 
 # Generar estructuras como aldeas, templos, etc. (true / false)
 ENV GENERATE_STRUCTURES=true

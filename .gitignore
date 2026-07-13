@@ -1,0 +1,11 @@
+# Archivos generados si corres el servidor localmente
+/data/
+/mods/
+/plugins/
+/world/
+/logs/
+*.jar
+*.log
+*.properties
+*.json
+.env

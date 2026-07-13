@@ -63,6 +63,3 @@ ENV GENERATE_STRUCTURES=true
 # --- 7. RED Y PUERTOS ---
 # Expone el puerto por defecto de Minecraft (TCP 25565)
 EXPOSE 25565
-
-# Directorio interno donde se guardará todo el progreso (Mundo, configs, plugins)
-VOLUME /data

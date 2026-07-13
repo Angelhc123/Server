@@ -68,3 +68,12 @@ EXPOSE 25565
 ENV ENABLE_RCON=true
 ENV RCON_PASSWORD=minecraft_secret_123
 EXPOSE 25575
+
+# --- 9. CONFIGURACIÓN DE AUTO-MODS DESDE GITHUB ---
+# Copia tu carpeta local "mods" a una caché dentro del contenedor
+COPY mods/ /mods-cache/
+
+# Configura el script de inicio personalizado para copiar los mods al volumen en cada arranque
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+ENTRYPOINT ["/start.sh"]

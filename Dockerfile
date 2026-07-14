@@ -36,6 +36,9 @@ ENV MAX_PLAYERS=20
 # Habilitar o deshabilitar el combate PvP (true / false)
 ENV PVP=true
 
+# Habilitar bloques de comandos (true / false)
+ENV ENABLE_COMMAND_BLOCK=true
+
 # --- 5. ACCESO Y SEGURIDAD ---
 # ONLINE_MODE: 
 # - true: Solo permite cuentas premium (compradas).

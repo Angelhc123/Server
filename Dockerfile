@@ -13,7 +13,7 @@ ENV EULA=TRUE
 ENV TYPE=VANILLA
 
 # Versión del juego: LATEST, 1.20.4, 1.20.1, 1.19.2, 1.18.2, etc.
-ENV VERSION=LATEST
+ENV VERSION=1.21.1
 
 # --- 3. RECURSOS Y RENDIMIENTO ---
 # Memoria RAM máxima y mínima que usará el servidor (ej: 2G, 4G)

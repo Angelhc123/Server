@@ -10,10 +10,10 @@ ENV EULA=TRUE
 
 # --- 2. CONFIGURACIÓN DE VERSIONES Y TIPOS (Fácil de cambiar) ---
 # Tipo de servidor: VANILLA, PAPER, FORGE, FABRIC, PURPUR, SPIGOT, etc.
-ENV TYPE=FABRIC
+ENV TYPE=VANILLA
 
 # Versión del juego: LATEST, 1.20.4, 1.20.1, 1.19.2, 1.18.2, etc.
-ENV VERSION=1.20.1
+ENV VERSION=LATEST
 
 # --- 3. RECURSOS Y RENDIMIENTO ---
 # Memoria RAM máxima y mínima que usará el servidor (ej: 2G, 4G)
@@ -58,7 +58,7 @@ ENV ENABLE_WHITELIST=false
 ENV SEED=""
 
 # Nombre de la carpeta del mundo (Por defecto es "world")
-ENV LEVEL=apocalipsis
+ENV LEVEL=world
 
 # Generar estructuras como aldeas, templos, etc. (true / false)
 ENV GENERATE_STRUCTURES=true
@@ -72,11 +72,4 @@ ENV ENABLE_RCON=true
 ENV RCON_PASSWORD=minecraft_secret_123
 EXPOSE 25575
 
-# --- 9. CONFIGURACIÓN DE AUTO-MODS DESDE GITHUB ---
-# Copia tu carpeta local "mods" a una caché dentro del contenedor
-COPY mods/ /mods-cache/
 
-# Configura el script de inicio personalizado para copiar los mods al volumen en cada arranque
-COPY start.sh /start.sh
-RUN chmod +x /start.sh
-ENTRYPOINT ["/start.sh"]
